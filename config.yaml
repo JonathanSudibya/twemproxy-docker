@@ -1,13 +1,10 @@
 gamma:
-  listen: 127.0.0.1:22123
+  listen: 0.0.0.0:22121
   hash: fnv1a_64
+  hash_tag: 'P:'
   distribution: ketama
-  timeout: 400
-  backlog: 1024
-  preconnect: true
+  timeout: 1000
   auto_eject_hosts: false
-  server_retry_timeout: 2000
-  server_failure_limit: 3
   servers:
    - 127.0.0.1:11211:1
    - 127.0.0.1:11212:1
