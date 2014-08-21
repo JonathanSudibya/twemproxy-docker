@@ -7,7 +7,7 @@ RUN apt-get install -y memcached
 
 # Install twemproxy
 RUN curl -qL https://twemproxy.googlecode.com/files/nutcracker-0.3.0.tar.gz | tar xzf -
-RUN cd nutcracker-0.3.0 && ./configure --enable-debug=log && make && mv src/nutcracker /twemproxy
+RUN cd nutcracker-0.3.0 && ./configure --enable-debug=log && make && mv src/nutcracker /usr/local/bin/nutcracker
 RUN cd / && rm -rf nutcracker-0.3.0
 
 # install pip deps

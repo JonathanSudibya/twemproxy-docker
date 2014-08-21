@@ -17,7 +17,7 @@ def write_nutcracker_config(backends):
                 'auto_eject_hosts': False,
                 'servers': backends
             }
-        }))
+        }, default_flow_style=False))
 
 def write_supervisor_config(memcached_backends=[]):
     config = configparser.ConfigParser()
