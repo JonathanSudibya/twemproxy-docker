@@ -1,6 +1,6 @@
 # Twemproxy Docker!
 This docker image contains twemproxy configured to run standalone with
-two bundled memcached instances or memcached instanced dynamically
+two bundled memcached instances or memcached instances dynamically
 looked up via EC2 instance tags. 
 
 ## Running It
