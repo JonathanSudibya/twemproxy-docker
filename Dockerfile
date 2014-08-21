@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 RUN apt-get update
 RUN apt-get install libtool make automake supervisor curl python3-pip -qy
-
+RUN apt-get install libyaml-0-2 -yq
 RUN apt-get install -y memcached
 
 # Install twemproxy

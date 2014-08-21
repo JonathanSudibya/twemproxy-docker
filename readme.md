@@ -14,6 +14,30 @@ docker run -d -p 22121:22121 -p 22222:22222 jamescarr/nutcracker-embedded
 Now you should be able to point any run of the mill memcached client at
 it on port 22121 and start using it. 
 
+There is already a tiny test suit that runs in a docker container to test the connectivity with twemproxy. To run it, you need to run the twemproxy container:
+
+```
+sudo docker run --name nutcracker -d -p 22121:22121 -p 22222:22222 jamescarr/nutcracker-embedded
+
+```
+
+You'll also need to cd to the test directory of the repository and built the test docker image:
+
+```
+sudo docker build -t memcache_test .
+```
+
+Once that is done, you can run the test container by linking the nutcracker container.
+
+```
+sudo docker run --link nutcracker:proxy --name test --rm memcache_test
+
+```
+
+If all goes well, you should see some passing tests!
+
+![](http://i.imgur.com/NqjCRIN.png)
+
 ### AWS Support
 
 You can swap out the embedded backends for real backends on EC2 by
