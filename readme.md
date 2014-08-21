@@ -43,9 +43,9 @@ vagrant environment.
 sudo docker build . # seriously were you expecting more???
 ```
 
-`generate_configs.py` - python script that generates supervisor and
+* `generate_configs.py` - python script that generates supervisor and
 twemproxy (nutcracker) configurations dynamically
-`run.sh` - shell script to run generate_configs.py followed by
+* `run.sh` - shell script to run generate_configs.py followed by
 supervisor. Runs by default when starting the container.
 
 
