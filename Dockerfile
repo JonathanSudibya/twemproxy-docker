@@ -16,6 +16,7 @@ RUN pip3 install boto
 
 # Configuration
 RUN mkdir -p /etc/nutcracker
+RUN mkdir -p /var/log/nutcracker
 ADD generate_configs.py /generate_configs.py
 ADD run.sh /run.sh
 RUN chmod a+x run.sh

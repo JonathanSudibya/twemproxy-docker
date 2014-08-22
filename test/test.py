@@ -2,6 +2,9 @@ from os import environ as env
 import unittest
 import memcache
 
+print(env)
+
+
 memcache_address = '{}:{}'.format(env['PROXY_PORT_22121_TCP_ADDR'], env['PROXY_PORT_22121_TCP_PORT'])
 
 class TestMemcache(unittest.TestCase):
