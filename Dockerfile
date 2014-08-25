@@ -21,7 +21,7 @@ ADD generate_configs.py /generate_configs.py
 ADD run.sh /run.sh
 RUN chmod a+x run.sh
 
-EXPOSE 3000 22222 22123 11211 11212
+EXPOSE 3000 22222 22123 11211 22121
 CMD ["/run.sh"]
 
 RUN apt-get remove libtool make automake curl -yq
