@@ -53,7 +53,7 @@ def generate_config_files():
     region    = os.environ.get('AWS_REGION', 'us-east-1')
 
     if tag_name and tag_value:
-        conn = boto.ec2.connect_to_region(region)
+        conn = boto.connect_ec2()
         instances = conn.get_only_instances(filters={'tag:{}'.format('tag_name'):tag_value})
 
         backends = ['{}:11211:1'.format(get_aws_ip(instance, public_ip)) for instance in instances]
