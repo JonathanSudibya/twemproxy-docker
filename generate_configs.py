@@ -1,5 +1,5 @@
 import os
-import configparser
+import ConfigParser as configparser
 import boto
 import yaml
 
