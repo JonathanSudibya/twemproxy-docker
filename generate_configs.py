@@ -51,7 +51,7 @@ def generate_config_files():
 
     if tag_name and tag_value:
         conn = boto.connect_ec2()
-        instances = conn.get_only_instances(filters={'tag:{}'.format('tag_name'):tag_value})
+        instances = conn.get_only_instances(filters={'tag:{}'.format(tag_name):tag_value})
 
         backends = ['{}:11211:1'.format(get_aws_ip(instance, public_ip)) for instance in instances]
         write_nutcracker_config(backends)

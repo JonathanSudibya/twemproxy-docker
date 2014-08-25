@@ -11,8 +11,8 @@ RUN cd nutcracker-0.3.0 && ./configure --enable-debug=log && make && mv src/nutc
 RUN cd / && rm -rf nutcracker-0.3.0
 
 # install pip deps
-RUN pip install pyaml
-RUN pip install boto
+RUN pip install pyaml==14.05.7 
+RUN pip install boto==2.32.0
 
 # Configuration
 RUN mkdir -p /etc/nutcracker
