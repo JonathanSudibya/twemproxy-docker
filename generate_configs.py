@@ -21,21 +21,18 @@ def write_nutcracker_config(backends):
 
 def write_supervisor_config(memcached_backends=[]):
     config = configparser.ConfigParser()
-    config['supervisord'] = {
-        'nodaemon':True,
-    }
-    config['program:nutcracker'] = {
-        'command':'/usr/local/bin/nutcracker -c /etc/nutcracker/nutcracker.yaml -o /var/log/nutcracker/nutcracker.log -s 22222 -v 6',
-    }
+    config.add_section('supervisord')
+    config.set('supervisord', 'nodaemon', True)
+    config.add_section('program:nutcracker')
+    config.set('program:nutcracker', 'command', '/usr/local/bin/nutcracker -c /etc/nutcracker/nutcracker.yaml -o /var/log/nutcracker/nutcracker.log -s 22222 -v 6')
 
     index = 0
     for memcache in memcached_backends:
         index = index + 1
-        config['program:memcached_{}'.format(index)] = {
-            'command':'/usr/bin/memcached -p {}'.format(memcache),
-            'user': 'memcache',
-        }
-
+        section_name = 'program:memcached_{}'.format(index)
+        config.add_section(section_name)
+        config.set(section_name, 'command', '/usr/bin/memcached -p {}'.format(memcache))
+        config.set(section_name, 'user', 'memcache')
 
     with open('/etc/supervisor/conf.d/supervisord.conf', 'w') as supervisor:
         config.write(supervisor)
