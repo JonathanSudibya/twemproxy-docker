@@ -53,7 +53,7 @@ def generate_config_files():
         conn = boto.connect_ec2()
         instances = conn.get_only_instances(filters={'tag:{}'.format(tag_name):tag_value})
 
-        backends = ['{}:11211:1'.format(get_aws_ip(instance, public_ip)) for instance in instances]
+        backends = ['{}:11211:1'.format(get_aws_ip(instance, public_ip)) for instance in instances if instance.state == 'running']
         write_nutcracker_config(backends)
         write_supervisor_config()
         
