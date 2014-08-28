@@ -56,7 +56,7 @@ def generate_config_files():
         conn = boto.ec2.connect_to_region(region)
         instances = conn.get_only_instances(filters={'tag:{}'.format('tag_name'):tag_value})
 
-        backends = ['{}:11211:1 {}'.format(get_aws_ip(instance, public_ip), instance.tags.get('Name', '').replace(' ', '-')) for instance in instances]
+        backends = ['{}:11211:1 {}'.format(get_aws_ip(instance, public_ip), instance.tags.get('cache-node-name', '')) for instance in instances]
         write_nutcracker_config(backends)
         write_supervisor_config()
         
