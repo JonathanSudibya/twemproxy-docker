@@ -61,7 +61,7 @@ the backend list with private IP addresses.
 
 ## Building It
 A token vagrant box is provided for those who do not have a native
-vagrant environment. 
+docker environment. 
 
 ```bash
 sudo docker build . # seriously were you expecting more???
