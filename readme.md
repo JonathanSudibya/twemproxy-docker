@@ -6,7 +6,7 @@ looked up via EC2 instance tags.
 ## Running It
 
 ```bash
-z
+
 docker run -d -p 22121:22121 -p 22222:22222 zapier/twemproxy
 
 ```
