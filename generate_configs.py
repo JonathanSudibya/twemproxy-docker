@@ -49,6 +49,8 @@ def generate_config_files():
     public_ip = 'true' == os.environ.get('AWS_PUBLIC_IP', 'true').lower()
     region    = os.environ.get('AWS_REGION', 'us-east-1')
 
+    memcache_links = [k for k in os.environ.keys() if k.startswith('MEMCACHE') and k.endswith('ADDR')]
+
     if tag_name and tag_value:
         conn = boto.connect_ec2()
         instances = conn.get_only_instances(filters={'tag:{}'.format(tag_name):tag_value})
@@ -57,6 +59,17 @@ def generate_config_files():
         write_nutcracker_config(backends)
         write_supervisor_config()
         
+    elif len(memcache_links) > 0:
+        addrs = []
+        for link in memcache_links:
+            name =link.split('_')
+            addr = "{}:{}:1".format(os.environ.get(name+'_PORT_11211_TCP_ADDR'), (os.environ.get(name+'_PORT_11211_TCP_PORT'))
+            if os.environ.has_key('{}_CONSISTENT_NAME'.format(name)):
+                addr = "{} {}".format(addr, os.environ.has_key['{}_CONSISTENT_NAME'format(name)])
+            addrs.append(addr)
+
+        write_nutcracker_config(addrs)
+        write_supervisor_config()
 
     else:
         write_nutcracker_config(['127.0.0.1:11211:1', '127.0.0.1:11212:1'])
