@@ -6,13 +6,70 @@ looked up via EC2 instance tags.
 ## Running It
 
 ```bash
-z
+
 docker run -d -p 22121:22121 -p 22222:22222 zapier/twemproxy
 
 ```
 
 Now you should be able to point any run of the mill memcached client at
-it on port 22121 and start using it. 
+it on port 22121 and start using it with two bundled memcache instances
+
+### Linking
+Youc an also use this with other memcache containers via linking. For
+example let's start up 3 memcache containers.
+
+```bash
+docker run --name a -d --expose 11211 tutum/memcached
+docker run --name b -d --expose 11211 tutum/memcached
+docker run --name c -d --expose 11211 tutum/memcached
+```
+
+Now let's link them so that they are proxied by twemproxy. The only
+requirement here is that the link name MUST start with the name
+"memcache" as we look for links that begin with this name and auto add
+them.
+
+
+```
+docker run \
+  --link a:memcache1 \
+  --link b:memcache2 \
+  --link c:memcache3 \
+  -d -p 22121:22121 twemproxy 
+```
+
+You can also specify consistent node names so you can ensure the same
+routing algorith regardless of IP address changes.
+
+```
+docker run \
+  --link a:memcache1 \
+  --link b:memcache2 \
+  --link c:memcache3 \
+  -e MEMCACHE1_CONSISTENT_NAME=optmius \
+  -e MEMCACHE2_CONSISTENT_NAME=megatron \
+  -e MEMCACHE3_CONSISTENT_NAME=starscream \
+  -d -p 22121:22121 twemproxy 
+```
+
+This will generate a nutcracker configuration like the following.
+
+```yaml
+gamma:
+  auto_eject_hosts: false
+  distribution: ketama
+  hash: fnv1a_64
+  hash_tag: 'P:'
+  listen: 0.0.0.0:22121
+  servers:
+  - 172.17.0.4:11211:1 bumblebee
+  - 172.17.0.3:11211:1 optimus
+  - 172.17.0.2:11211:1 optimus
+  timeout: 250
+
+```
+
+### Tests
 
 There is already a tiny test suit that runs in a docker container to test the connectivity with twemproxy. To run it, you need to run the twemproxy container:
 

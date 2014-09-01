@@ -62,10 +62,14 @@ def generate_config_files():
     elif len(memcache_links) > 0:
         addrs = []
         for link in memcache_links:
-            name =link.split('_')
-            addr = "{}:{}:1".format(os.environ.get(name+'_PORT_11211_TCP_ADDR'), (os.environ.get(name+'_PORT_11211_TCP_PORT'))
-            if os.environ.has_key('{}_CONSISTENT_NAME'.format(name)):
-                addr = "{} {}".format(addr, os.environ.has_key['{}_CONSISTENT_NAME'format(name)])
+            name = link.split('_')[0]
+            address = os.environ[name+'_PORT_11211_TCP_ADDR']
+            port = os.environ[name+'_PORT_11211_TCP_PORT']
+            consistent_name = '{}_CONSISTENT_NAME'.format(name)
+            addr = "{}:{}:1".format(address, port)
+            
+            if os.environ.has_key(consistent_name):
+                addr = "{} {}".format(addr, os.environ[consistent_name])
             addrs.append(addr)
 
         write_nutcracker_config(addrs)
