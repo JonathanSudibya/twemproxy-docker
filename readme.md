@@ -62,9 +62,9 @@ gamma:
   hash_tag: 'P:'
   listen: 0.0.0.0:22121
   servers:
-  - 172.17.0.4:11211:1 bumblebee
-  - 172.17.0.3:11211:1 optimus
-  - 172.17.0.2:11211:1 optimus
+  - 172.17.0.4:11211:1 optimus
+  - 172.17.0.3:11211:1 megatron
+  - 172.17.0.2:11211:1 starscream
   timeout: 250
 
 ```
