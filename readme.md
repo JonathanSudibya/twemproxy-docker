@@ -14,6 +14,19 @@ docker run -d -p 22121:22121 -p 22222:22222 zapier/twemproxy
 Now you should be able to point any run of the mill memcached client at
 it on port 22121 and start using it with two bundled memcache instances
 
+### Environment Variables
+Configuration can be tweaked via the following environmnet variables
+
+`TWEMPROXY_TIMEOUT` - the timeout in milliseconds
+`TWEMPROXY_AUTO_EJECT_HOSTS` - whether or not to auto eject hosts.
+Defaults to false.
+
+#### AWS Specific Variables
+`AWS_TAG_NAME`  - the tag name to look at for auto-adding backends
+`AWS_TAG_VALUE` - the tag value to look at for auto-adding backends
+`AWS_PUBLIC_IP` - whether or not we should use AWS public IP addresses. Defaults to
+false which prefers internal IP addresses.
+
 ### Linking
 Youc an also use this with other memcache containers via linking. For
 example let's start up 3 memcache containers.

@@ -6,8 +6,8 @@ import yaml
 
 
 def write_nutcracker_config(backends):
-    timeout = int(os.environ.get("TWEMPROXY_TIMEOUT", "250"))
-
+    timeout    = int(os.environ.get("TWEMPROXY_TIMEOUT", "250"))
+    auto_eject = os.environ.get('TWEMPROXY_AUTO_EJECT_HOSTS', 'false').lower() == 'true'
     with open('/etc/nutcracker/nutcracker.yaml', 'w') as nutcracker:
         nutcracker.write(yaml.dump({
             'gamma':{
@@ -16,7 +16,7 @@ def write_nutcracker_config(backends):
                 'hash_tag': 'P:',
                 'distribution': 'ketama',
                 'timeout': timeout,
-                'auto_eject_hosts': False,
+                'auto_eject_hosts': auto_eject,
                 'servers': backends
             }
         }, default_flow_style=False))
