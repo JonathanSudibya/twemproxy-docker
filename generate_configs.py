@@ -29,7 +29,7 @@ def write_supervisor_config(memcached_backends=[]):
         index = index + 1
         section_name = 'program:memcached_{}'.format(index)
         config.add_section(section_name)
-        config.set(section_name, 'command', '/usr/bin/memcached -p {}'.format(memcache))
+        #config.set(section_name, 'command', '/usr/bin/memcached -p {}'.format(memcache))
         config.set(section_name, 'user', 'memcache')
     
     with open('/etc/supervisor/conf.d/supervisord.conf', 'w') as supervisor:
