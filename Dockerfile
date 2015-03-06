@@ -5,7 +5,7 @@ RUN apt-get install libtool make automake supervisor curl python2.7 python-pip -
 
 # Install twemproxy
 RUN curl -qL https://github.com/twitter/twemproxy/archive/v0.4.0.tar.gz | tar xzf -
-RUN cd v0.4.0 && ./configure --enable-debug=log && make && make install
+RUN cd  twemproxy-0.4.0 && autoreconf -fvi && ./configure --enable-debug=log && make && make install
 
 # install pip deps
 RUN pip install pyaml==14.05.7 

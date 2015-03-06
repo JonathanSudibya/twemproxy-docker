@@ -8,10 +8,10 @@ def write_nutcracker_config(backends):
             'gamma':{
                 'listen': '0.0.0.0:22121',
                 'hash': 'fnv1a_64',
-                'hash_tag': '{}:',
+                'hash_tag': '{}',
                 'distribution': 'ketama',
                 'timeout': 300,
-                'redis': True
+                'redis': True,
                 'auto_eject_hosts': False,
                 'servers': backends
             }
@@ -22,7 +22,7 @@ def write_supervisor_config(memcached_backends=[]):
     config.add_section('supervisord')
     config.set('supervisord', 'nodaemon', True)
     config.add_section('program:nutcracker')
-    config.set('program:nutcracker', 'command', '/usr/local/bin/nutcracker -c /etc/nutcracker/nutcracker.yaml -o /var/log/nutcracker/nutcracker.log -s 22222')
+    config.set('program:nutcracker', 'command', '/usr/local/sbin/nutcracker -c /etc/nutcracker/nutcracker.yaml -o /var/log/nutcracker/nutcracker.log -s 22222')
     
     index = 0
     for memcache in memcached_backends:
@@ -36,14 +36,14 @@ def write_supervisor_config(memcached_backends=[]):
         config.write(supervisor)
 
 def generate_config_files():
-    memcache_links = [k for k in os.environ.keys() if k.startswith('MEMCACHE') and k.endswith('ADDR')]
+    memcache_links = [k for k in os.environ.keys() if k.startswith('REDIS') and k.endswith('ADDR')]
 
     if len(memcache_links) > 0:
         addrs = []
         for link in memcache_links:
             name = link.split('_')[0]
-            address = os.environ[name+'_PORT_11211_TCP_ADDR']
-            port = os.environ[name+'_PORT_11211_TCP_PORT']
+            address = os.environ[name+'_PORT_6379_TCP_ADDR']
+            port = os.environ[name+'_PORT_6379_TCP_ADDR']
             consistent_name = '{}_CONSISTENT_NAME'.format(name)
             addr = "{}:{}:1".format(address, port)
             
